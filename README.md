@@ -1,39 +1,53 @@
-# RabbitMQ 简单演示
+# RabbitMQ 分离式演示
 
-这是一个超级简化的RabbitMQ演示项目，专注于展示消息队列的核心概念。
+这是一个分离式的RabbitMQ演示项目，发布者和订阅者分别在不同的目录中，便于独立开发和部署。
 
 ## 🎯 项目结构
 
 ```
 RabbitMQTest/
-├── simple/                    # 简化版本
-│   ├── models.go              # 数据模型
-│   ├── rabbitmq.go            # RabbitMQ连接工具
-│   ├── publisher_main.go      # 发布者
-│   ├── subscriber_main.go     # 订阅者
-│   ├── run_demo.sh           # 一键运行脚本
-│   ├── 快速开始.md            # 超简单说明
-│   └── README.md             # 详细说明
+├── publisher/                 # 发布者目录
+│   ├── main.go               # 发布者主程序
+│   ├── models.go             # 数据模型
+│   ├── rabbitmq.go           # RabbitMQ连接工具
+│   ├── publisher.go          # 多文件版本发布者
+│   ├── go.mod                # 发布者模块文件
+│   └── run.sh                # 发布者运行脚本
+├── subscriber/                # 订阅者目录
+│   ├── main.go               # 订阅者主程序
+│   ├── models.go             # 数据模型
+│   ├── rabbitmq.go           # RabbitMQ连接工具
+│   ├── subscriber.go         # 多文件版本订阅者
+│   ├── go.mod                # 订阅者模块文件
+│   └── run.sh                # 订阅者运行脚本
 ├── docker-compose.yml         # RabbitMQ服务
+├── run_demo.sh               # 完整演示脚本
 └── README.md                 # 项目说明
 ```
 
 ## 🚀 快速开始
 
-### 1. 进入简化版本目录
+### 1. 启动RabbitMQ服务
 ```bash
-cd simple
+docker-compose up -d
 ```
 
-### 2. 一键运行演示
+### 2. 运行发布者
+```bash
+cd publisher
+./run.sh
+```
+
+### 3. 运行订阅者（新终端）
+```bash
+cd subscriber
+./run.sh
+```
+
+### 4. 一键演示
 ```bash
 ./run_demo.sh
 ```
-
-### 3. 查看RabbitMQ管理界面
-访问 http://localhost:15672
-- 用户名: guest
-- 密码: guest
 
 ## 💡 核心概念
 
@@ -76,10 +90,19 @@ cd simple
 
 ## 📚 学习目标
 
-通过这个简单演示，你将理解：
+通过这个分离式演示，你将理解：
 - ✅ 什么是消息队列
 - ✅ 发布者-订阅者模式
 - ✅ 消息的发送和接收
 - ✅ 系统解耦的概念
+- ✅ 微服务架构的分离式设计
 
-现在就去 `simple/` 目录开始体验吧！
+## 🎯 分离式设计的优势
+
+- ✅ **独立开发**：发布者和订阅者可以独立开发
+- ✅ **独立部署**：可以分别部署到不同的服务器
+- ✅ **独立测试**：可以单独测试每个组件
+- ✅ **团队协作**：不同团队可以负责不同组件
+- ✅ **技术栈灵活**：可以使用不同的技术栈
+
+现在就去体验分离式的RabbitMQ项目吧！
